@@ -1,5 +1,5 @@
 ### App link : 
-https://murmuring-springs-14449.herokuapp.com/
+https://murmuring-springs-14449.herokuapp.com/login
 
 ### To view the inserted data, navigate to or send a GET request through postman using the same url :
 https://murmuring-springs-14449.herokuapp.com/data
