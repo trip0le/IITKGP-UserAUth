@@ -1,2 +1,8 @@
 ### App link : 
 https://murmuring-springs-14449.herokuapp.com/
+
+### To view the inserted data, navigate to or send a GET request through postman using the same url :
+https://murmuring-springs-14449.herokuapp.com/data
+
+### Add data using postman (send a POST request), using :
+https://murmuring-springs-14449.herokuapp.com/data/add
