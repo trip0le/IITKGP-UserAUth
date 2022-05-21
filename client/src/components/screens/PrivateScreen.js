@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "./PrivateScreen.css"
 
 const PrivateScreen = ({ history }) => {
+
+  const idx = Math.floor(Math.random() * 8);
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
 
@@ -41,7 +44,7 @@ const PrivateScreen = ({ history }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const idx = Math.floor(Math.random() * (7 - 0 + 1)) + 0;
+  //  const idx = rand;
 
   function NewlineText(props) {
     const text = props.text;
@@ -50,9 +53,7 @@ const PrivateScreen = ({ history }) => {
     return newText;
   }
 
-function myFunction(){
-  return true;
-}
+
 
   return error ? (
     <span className="error-message">{error}</span>
@@ -66,19 +67,23 @@ function myFunction(){
             <NewlineText text={question.Program} />
           ) : null
         )}
+      </div>
+      <div>
         {questions.map((question) =>
           question.QuestionId === idx
             ? question.Questions.sort(() => Math.random() - 0.5).map(
-                (Question) => (
-                  <div>
-                    <span>{Question.Serial_Number})  </span>
-                    {Question.Content}
-                  </div>
-                )
+              (Question, key) => (
+                <div className="body">
+                  <form className="wrapper" id="nameform">
+                    <h2><span>{key + 1}. </span>{Question.Content}</h2>
+                    <textarea placeholder="Type your answer here..." required></textarea>
+                  </form>
+                </div>
               )
+            )
             : null
         )}
-
+        <button type="submit" form="nameform" value="Submit">Submit</button>
       </div>
     </>
   );
