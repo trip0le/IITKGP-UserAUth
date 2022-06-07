@@ -3,10 +3,22 @@ import axios from "axios";
 import "./PrivateScreen.css"
 
 const PrivateScreen = ({ history }) => {
-
-  const idx = Math.floor(Math.random() * 8);
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
+  const [texts, setTexts] = useState([]);
+
+  const handleChange = key => e => {
+    e.preventDefault();
+    console.log(e);
+    let newArr = [...texts];
+    newArr[key] = e.target.value;
+    setTexts(newArr);
+  }
+
+  
+  const onSubmit = (e) => {
+    e.preventDefault();
+  }
 
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
@@ -42,7 +54,7 @@ const PrivateScreen = ({ history }) => {
       .get("/data")
       .then((res) => setQuestions(res.data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [questions.Questions]);
 
   //  const idx = rand;
 
@@ -63,27 +75,25 @@ const PrivateScreen = ({ history }) => {
       <button onClick={logoutHandler}>Logout</button>
       <div>
         {questions.map((question) =>
-          question.QuestionId === idx ? (
-            <NewlineText text={question.Program} />
-          ) : null
+
+          <NewlineText text={question.Program} />
+
         )}
       </div>
-      <div>
-        {questions.map((question) =>
-          question.QuestionId === idx
-            ? question.Questions.sort(() => Math.random() - 0.5).map(
+      <div className="body">
+        <form className="wrapper" id="nameform" onSubmit={onSubmit}>
+          {questions.map((question) =>
+            question.Questions.map(
               (Question, key) => (
-                <div className="body">
-                  <form className="wrapper" id="nameform">
-                    <h2><span>{key + 1}. </span>{Question.Content}</h2>
-                    <textarea placeholder="Type your answer here..." required></textarea>
-                  </form>
+                <div className="fragment">
+                  <h2><span>{key + 1}. </span>{Question.Content}</h2>
+                  <textarea placeholder={`Type answer ${key + 1}`} name={`Answer_${key + 1}`} required key={key + 1} value={texts[key]} onChange={handleChange(key)} />
                 </div>
               )
             )
-            : null
-        )}
-        <button type="submit" form="nameform" value="Submit">Submit</button>
+          )}
+          <button type="submit" form="nameform" value="Submit">Submit</button>
+        </form>
       </div>
     </>
   );
