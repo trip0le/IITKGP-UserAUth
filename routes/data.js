@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Queries = require("../models/Data");
 
-const idx = Math.floor(Math.random() * 8);
+const idx = Math.floor(Math.random()*(8-1+1)+1);;
 
 //get the question details saved in the database
 router.route("/").get((req, res) => {
